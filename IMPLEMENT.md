@@ -26,31 +26,31 @@
 
 ### Phase 0. SSR 부트스트랩 및 개발 프레임 구성
 #### 구현 체크리스트
-- [ ] `npx createLithent` SSR 보일러플레이트로 프로젝트 기본 구조 생성/정리
-- [ ] Tailwind 설정(`tailwind.config`, `postcss.config`, 글로벌 CSS 엔트리) 연결
-- [ ] 기본 디렉터리 생성: `src/`, `server/`, `tests/`
-- [ ] `.env.example` 생성(필수 키 placeholder 포함)
-- [ ] `README`에 로컬 실행 절차(install/dev/server/test) 최소 문구 추가
+- [x] `npx createLithent` SSR 보일러플레이트로 프로젝트 기본 구조 생성/정리
+- [x] Tailwind 설정(`tailwind.config`, `postcss.config`, 글로벌 CSS 엔트리) 연결
+- [x] 기본 디렉터리 생성: `src/`, `server/`, `tests/`
+- [x] `.env.example` 생성(필수 키 placeholder 포함)
+- [x] `README`에 로컬 실행 절차(install/dev/server/test) 최소 문구 추가
 
 #### Baseline Test
 - [ ] 앱 부팅 스모크: SSR 서버가 에러 없이 시작/종료된다.
-- [ ] 스타일 스모크: Tailwind 유틸 클래스가 SSR 결과 HTML에서 반영된다.
-- [ ] 문서 스모크: `.env.example`의 필수 키가 누락되지 않았다.
+- [x] 스타일 스모크: Tailwind 유틸 클래스가 SSR 결과 HTML에서 반영된다.
+- [x] 문서 스모크: `.env.example`의 필수 키가 누락되지 않았다.
 
 #### Exit Criteria
 - [ ] 새 작업자가 저장소 clone 후 기본 실행(`install -> dev`)을 재현할 수 있다.
 
 ### Phase 1. 환경변수/DB 연결/헬스체크 기반 구현
 #### 구현 체크리스트
-- [ ] 서버 환경변수 파서 구현: `MONGODB_URI`, `MONGODB_DB_NAME`, `PORT`, `JMEMO_CATEGORY_FILTER`, `LOG_LEVEL`
-- [ ] `MONGODB_URI` placeholder 및 형식 검증 구현(fail-fast)
-- [ ] Mongo 연결 모듈 구현(`connect`, `disconnect`, `ping`)
-- [ ] 헬스체크 라우트 구현: `GET /health/live`, `GET /health/ready`
-- [ ] DB 연결 실패/ready 실패 시 표준 에러 응답(`503`) 처리
+- [x] 서버 환경변수 파서 구현: `MONGODB_URI`, `MONGODB_DB_NAME`, `PORT`, `JMEMO_CATEGORY_FILTER`, `LOG_LEVEL`
+- [x] `MONGODB_URI` placeholder 및 형식 검증 구현(fail-fast)
+- [x] Mongo 연결 모듈 구현(`connect`, `disconnect`, `ping`)
+- [x] 헬스체크 라우트 구현: `GET /health/live`, `GET /health/ready`
+- [x] DB 연결 실패/ready 실패 시 표준 에러 응답(`503`) 처리
 
 #### Baseline Test
-- [ ] env 파서 단위 테스트(정상/누락/잘못된 형식)
-- [ ] DB ping 모킹 테스트(ready 성공/실패)
+- [x] env 파서 단위 테스트(정상/누락/잘못된 형식)
+- [x] DB ping 모킹 테스트(ready 성공/실패)
 - [ ] 서버 부팅 시 Mongo 연결 실패 테스트(프로세스 실패 경로 확인)
 
 #### Exit Criteria
@@ -58,33 +58,33 @@
 
 ### Phase 2. 리뷰 도메인 서비스 및 데이터 조회 계약 구현
 #### 구현 체크리스트
-- [ ] Mongoose 모델 구현: `Jmemo`, `Category`
-- [ ] 인덱스 적용: `favorite`, `regdate/moddate`, `category`, `title`
-- [ ] 리스트 조회 서비스 구현(정렬: `favorite desc, regdate desc, _id desc`)
-- [ ] 카테고리 필터 파서 구현(`JMEMO_CATEGORY_FILTER`, comma split, trim, empty disable)
-- [ ] 상세 조회 서비스 구현(잘못된 ID/미존재 데이터 오류 분리)
+- [x] Mongoose 모델 구현: `Jmemo`, `Category`
+- [x] 인덱스 적용: `favorite`, `regdate/moddate`, `category`, `title`
+- [x] 리스트 조회 서비스 구현(정렬: `favorite desc, regdate desc, _id desc`)
+- [x] 카테고리 필터 파서 구현(`JMEMO_CATEGORY_FILTER`, comma split, trim, empty disable)
+- [x] 상세 조회 서비스 구현(잘못된 ID/미존재 데이터 오류 분리)
 
 #### Baseline Test
-- [ ] 필터 파서 테스트(`review`, `review,share`, whitespace, empty)
-- [ ] 리스트 정렬 테스트(즐겨찾기 우선 + 최신순)
-- [ ] 상세 조회 테스트(정상, invalid id, not found)
+- [x] 필터 파서 테스트(`review`, `review,share`, whitespace, empty)
+- [x] 리스트 정렬 테스트(즐겨찾기 우선 + 최신순)
+- [x] 상세 조회 테스트(정상, invalid id, not found)
 
 #### Exit Criteria
 - [ ] `.env` 필터 값 변경만으로 조회 결과가 코드 수정 없이 변경된다.
 
 ### Phase 3. SSR 라우팅과 페이지 골격 구현(카드 리스트 + 상세)
 #### 구현 체크리스트
-- [ ] 라우트 구현: `GET /`, `GET /notes/:id`, `GET /:id` alias(`302`)
-- [ ] 리스트 페이지 SSR 구현(카드 클릭 내비게이션)
-- [ ] 카드 표시 정보를 `title/tag/date` 기준으로 고정
-- [ ] 카드 전체 영역 클릭 시 상세 이동되도록 구현
-- [ ] 상세 페이지 SSR 구현(`.markdown-body` 래퍼 사용)
-- [ ] 404/500 기본 에러 페이지 구현
-- [ ] 데이터 바인딩 계약 고정: 리스트(`id,title,dateLabel,favorite,tags`), 상세(`title,renderedHtml`)
+- [x] 라우트 구현: `GET /`, `GET /notes/:id`, `GET /:id` alias(`302`)
+- [x] 리스트 페이지 SSR 구현(카드 클릭 내비게이션)
+- [x] 카드 표시 정보를 `title/tag/date` 기준으로 고정
+- [x] 카드 전체 영역 클릭 시 상세 이동되도록 구현
+- [x] 상세 페이지 SSR 구현(`.markdown-body` 래퍼 사용)
+- [x] 404/500 기본 에러 페이지 구현
+- [x] 데이터 바인딩 계약 고정: 리스트(`id,title,dateLabel,favorite,tags`), 상세(`title,renderedHtml`)
 
 #### Baseline Test
-- [ ] 라우트 테스트(`/`, `/notes/:id`, `/:id` alias)
-- [ ] 상세 페이지 404 테스트(없는 문서/잘못된 ID)
+- [x] 라우트 테스트(`/`, `/notes/:id`, `/:id` alias)
+- [x] 상세 페이지 404 테스트(없는 문서/잘못된 ID)
 - [ ] SSR 렌더 스냅샷 테스트(리스트/상세 핵심 마크업)
 
 #### Exit Criteria
@@ -92,38 +92,38 @@
 
 ### Phase 4. Markdown Viewer 품질 구현(GitHub 스타일, 테마, 반응형)
 #### 구현 체크리스트
-- [ ] Markdown 렌더 모듈 구현(`markdown -> safe html`)
-- [ ] GitHub 스타일 계열 CSS 적용(`.markdown-body` 기반)
-- [ ] 라이트/다크 모드 토글 구현 + 저장(`jmemo_theme`)
-- [ ] 라이트/다크 모두 차분한 톤 팔레트로 디자인 토큰 구성
-- [ ] 권장 폰트 스택(`Pretendard Variable` 계열) 및 본문/메타 타이포그래피 적용
-- [ ] SSR 초기 테마 결정(쿠키 -> `prefers-color-scheme`)
-- [ ] 반응형 레이아웃 적용(모바일/태블릿/PC)
-- [ ] PC 최대 너비 제한 적용(`../jwreview` 기준 `768px`)
+- [x] Markdown 렌더 모듈 구현(`markdown -> safe html`)
+- [x] GitHub 스타일 계열 CSS 적용(`.markdown-body` 기반)
+- [x] 라이트/다크 모드 토글 구현 + 저장(`jmemo_theme`)
+- [x] 라이트/다크 모두 차분한 톤 팔레트로 디자인 토큰 구성
+- [x] 권장 폰트 스택(`Pretendard Variable` 계열) 및 본문/메타 타이포그래피 적용
+- [x] SSR 초기 테마 결정(쿠키 -> `prefers-color-scheme`)
+- [x] 반응형 레이아웃 적용(모바일/태블릿/PC)
+- [x] PC 최대 너비 제한 적용(`../jwreview` 기준 `768px`)
 
 #### Baseline Test
-- [ ] Markdown 요소 렌더 테스트(heading/list/code/table/blockquote)
+- [x] Markdown 요소 렌더 테스트(heading/list/code/table/blockquote)
 - [ ] 테마 토글 상태 유지 테스트(새로고침/재접속)
 - [ ] 반응형 스타일 테스트(주요 브레이크포인트)
-- [ ] 카드 전역 클릭 영역 테스트(카드 내부 어느 영역 클릭해도 이동)
-- [ ] 카드 정보 노출 테스트(`title/tag/date`)
-- [ ] sanitize 테스트(`script`, inline handler 제거)
+- [x] 카드 전역 클릭 영역 테스트(카드 내부 어느 영역 클릭해도 이동)
+- [x] 카드 정보 노출 테스트(`title/tag/date`)
+- [x] sanitize 테스트(`script`, inline handler 제거)
 
 #### Exit Criteria
 - [ ] 뷰어 가독성(라이트/다크), 반응형, PC 최대 너비 제한 요구가 모두 충족된다.
 
 ### Phase 5. 운영 설정 완성(.env 카테고리 필터, 로깅/에러 처리)
 #### 구현 체크리스트
-- [ ] 구조화 로깅 적용(`time`, `level`, `requestId`, `route`, `status`, `latencyMs`)
-- [ ] 민감정보 마스킹 규칙 적용(DB URI, 토큰, 쿠키)
-- [ ] 공통 에러 포맷/에러 코드 규칙 정리
-- [ ] `.env.example`와 운영 문서에 카테고리 필터 변경 가이드 추가
-- [ ] 기본 성능 보호(목록 조회 limit/필드 projection) 반영
+- [x] 구조화 로깅 적용(`time`, `level`, `requestId`, `route`, `status`, `latencyMs`)
+- [x] 민감정보 마스킹 규칙 적용(DB URI, 토큰, 쿠키)
+- [x] 공통 에러 포맷/에러 코드 규칙 정리
+- [x] `.env.example`와 운영 문서에 카테고리 필터 변경 가이드 추가
+- [x] 기본 성능 보호(목록 조회 limit/필드 projection) 반영
 
 #### Baseline Test
 - [ ] 로깅 포맷 테스트(필수 필드 존재)
 - [ ] 민감정보 마스킹 테스트
-- [ ] 에러 응답 포맷 테스트(400/404/500/503)
+- [x] 에러 응답 포맷 테스트(400/404/500/503)
 
 #### Exit Criteria
 - [ ] 운영 중 문제 재현/추적에 필요한 로그와 에러 정보가 충분히 남는다.
@@ -201,3 +201,6 @@
 - [x] `2026-02-22 00:20 UTC | Design-sync | done: PD-01~PD-06 확정사항을 DESIGN/IMPLEMENT에 동기화 | next: Phase 0 구현 시작 | blockers: PD-07 미확정 | commit: (not committed)`
 - [x] `2026-02-22 00:30 UTC | Design-sync | done: PD-07(사용자 프로파일/사용 빈도) 확정 및 REQUIREMENTS/DESIGN/IMPLEMENT 동기화 | next: Phase 0 구현 시작 | blockers: 없음 | commit: (not committed)`
 - [x] `2026-02-22 00:40 UTC | Design-sync | done: 카드 UI 세부기준(title/tag/date, 카드 전체 클릭, 차분한 톤, 권장 폰트) 문서 동기화 | next: Phase 0 구현 시작 | blockers: 없음 | commit: (not committed)`
+- [x] `2026-02-22 13:05 UTC | Phase-0~5(partial) | done: SSR 서버/라우트, env/db/service 모듈, Tailwind+GitHub markdown 자산 파이프라인, 테마 토글, 카드 리스트/상세 렌더 구현 | next: 서버 부팅 스모크 + 자동 테스트 케이스 추가(Phase 0/1 Baseline) | blockers: 실DB 연결 확인용 .env 필요 | commit: (not committed)`
+- [x] `2026-02-22 13:42 UTC | Test-baseline(partial) | done: unit(env parser) + smoke(SSR list/detail render) 테스트 추가 및 통과 | next: DB/라우트 통합 테스트 확장 | blockers: sandbox listen 제한으로 서버 소켓 스모크 미실행 | commit: (not committed)`
+- [x] `2026-02-22 13:55 UTC | Phase-1~5(test-hardening) | done: 라우트 테스트를 소켓 비의존 방식으로 보강, env 카테고리 빈값 비활성화 규칙 수정, service/markdown/error 포맷 테스트 확장(총 23 tests PASS) | next: 실DB 기반 서버 부팅 스모크 및 릴리즈 수동체크 수행 | blockers: sandbox 네트워크 제한으로 Atlas ping(ECONNREFUSED) 확인 불가 | commit: (not committed)`

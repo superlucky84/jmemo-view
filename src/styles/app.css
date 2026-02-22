@@ -1,0 +1,251 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --surface-soft: #f8f9fc;
+  --fg: #1f2937;
+  --fg-soft: #6b7280;
+  --border: #d5dbe5;
+  --border-strong: #bec8d6;
+  --accent: #2563eb;
+  --accent-soft: #dbe8ff;
+}
+
+html.dark {
+  --bg: #12161d;
+  --surface: #1a212c;
+  --surface-soft: #212a37;
+  --fg: #e5ebf4;
+  --fg-soft: #9ba8ba;
+  --border: #303a49;
+  --border-strong: #3c485b;
+  --accent: #83aaf6;
+  --accent-soft: #24324a;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family:
+    "Pretendard Variable",
+    "Noto Sans KR",
+    "Apple SD Gothic Neo",
+    sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page-shell {
+  @apply min-h-screen px-4 py-5 md:px-8 md:py-8;
+}
+
+.topbar {
+  @apply mx-auto flex w-full max-w-6xl items-center justify-between gap-3;
+}
+
+.brand-title {
+  @apply text-lg font-semibold tracking-tight md:text-xl;
+}
+
+.brand-sub {
+  @apply mt-1 text-sm;
+  color: var(--fg-soft);
+}
+
+.theme-toggle {
+  @apply inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg);
+}
+
+.theme-toggle:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-soft);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.review-grid {
+  @apply mx-auto mt-6 grid w-full max-w-6xl gap-4 sm:grid-cols-2 xl:grid-cols-3;
+}
+
+.review-card-link {
+  @apply block h-full rounded-xl;
+}
+
+.review-card-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.review-card {
+  @apply flex h-full flex-col gap-4 rounded-xl p-4 md:p-5 shadow-sm transition-colors;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.review-card:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-soft);
+}
+
+.review-title {
+  margin: 0;
+  min-height: 2.8em;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .review-title {
+    font-size: 1.08rem;
+  }
+}
+
+.tag-row {
+  @apply flex flex-wrap gap-2;
+}
+
+.tag-chip {
+  @apply rounded-full px-2.5 py-1 text-xs font-medium;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.date-row {
+  @apply mt-auto flex items-center justify-between text-xs md:text-sm;
+  color: var(--fg-soft);
+}
+
+.empty-card {
+  @apply rounded-xl p-6 text-sm md:text-base;
+  border: 1px dashed var(--border);
+  background: var(--surface);
+  color: var(--fg-soft);
+}
+
+.pagination {
+  @apply mx-auto mt-5 flex w-full max-w-6xl items-center justify-center gap-3 text-sm md:text-base;
+}
+
+.pager-link,
+.pager-disabled {
+  @apply rounded-md px-3 py-1.5;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.pager-link:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-soft);
+}
+
+.pager-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.detail-shell {
+  @apply mx-auto mt-6 w-full max-w-6xl;
+}
+
+.detail-meta {
+  @apply mt-2 text-sm;
+  color: var(--fg-soft);
+}
+
+.markdown-frame {
+  @apply mt-5 rounded-xl px-3 py-4 md:px-6 md:py-7;
+  max-width: 768px;
+  margin-inline: auto;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.markdown-body {
+  max-width: none !important;
+  background: transparent !important;
+  color: var(--fg) !important;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.markdown-body code,
+.markdown-body pre code {
+  font-family:
+    "JetBrains Mono",
+    "SFMono-Regular",
+    Menlo,
+    Consolas,
+    monospace;
+}
+
+html.dark .markdown-body a {
+  color: #8fb6ff;
+}
+
+html:not(.dark) .markdown-body a {
+  color: #0f52bd;
+}
+
+html.dark .markdown-body pre {
+  background: #0f1724;
+}
+
+html.dark .markdown-body code {
+  background: #202a39;
+  color: #d9e4f3;
+}
+
+html.dark .markdown-body blockquote {
+  color: #9bacbf;
+  border-left-color: #3a4558;
+}
+
+html.dark .markdown-body hr,
+html.dark .markdown-body table th,
+html.dark .markdown-body table td {
+  border-color: #3a4558;
+}
+
+.back-link {
+  @apply inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-sm font-medium;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.back-link:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-soft);
+}
+
+.error-wrap {
+  @apply mx-auto mt-16 max-w-xl rounded-xl p-6 text-center;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.error-title {
+  @apply text-xl font-semibold;
+}
+
+.error-text {
+  @apply mt-2 text-sm md:text-base;
+  color: var(--fg-soft);
+}

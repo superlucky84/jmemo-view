@@ -5,6 +5,8 @@ node_modules/
 dist/
 coverage/
 .vite/
+public/assets/app.css
+public/assets/github-markdown.css
 
 # env files
 .env

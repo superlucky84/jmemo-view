@@ -9,9 +9,10 @@
     "node": ">=20.10.0"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "pnpm run build:assets && pnpm run server:dev",
+    "build": "pnpm run build:assets",
+    "build:assets": "tailwindcss -i ./src/styles/app.css -o ./public/assets/app.css --minify && cp ./node_modules/github-markdown-css/github-markdown.css ./public/assets/github-markdown.css",
+    "preview": "pnpm run server:start",
     "server:dev": "node --watch --env-file=.env server/index.mjs",
     "server:start": "node --env-file=.env server/index.mjs",
     "test": "vitest run",
@@ -25,16 +26,20 @@
   },
   "dependencies": {
     "express": "^5.2.1",
+    "github-markdown-css": "^5.9.0",
     "lithent": "file:../lithent",
+    "markdown-it": "^14.1.1",
     "mongoose": "^9.2.1",
     "multer": "^2.0.2"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.2.0",
     "@tailwindcss/postcss": "^4.2.0",
     "@types/node": "^22.13.9",
     "autoprefixer": "^10.4.24",
     "jsdom": "^28.1.0",
     "postcss": "^8.5.6",
+    "supertest": "^7.2.2",
     "tailwindcss": "^4.2.0",
     "typescript": "^5.8.2",
     "vite": "^6.2.1",
