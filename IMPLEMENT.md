@@ -189,10 +189,10 @@
 - [x] PD-07: 대상 사용자 프로파일/사용 빈도 확정 (PC/모바일 모두 자주 사용, 모바일 조회 비중 높음) (`DESIGN.md`)
 
 ## 7. 중단/재개 체크리스트
-- [ ] 마지막으로 완료한 체크박스를 이 문서에 반영했다.
-- [ ] 진행 중 이슈와 blocker를 1줄로 요약했다.
-- [ ] 다음 시작 지점(Phase/작업 1개)을 명시했다.
-- [ ] 관련 커밋 SHA를 기록했다.
+- [x] 마지막으로 완료한 체크박스를 이 문서에 반영했다.
+- [x] 진행 중 이슈와 blocker를 1줄로 요약했다.
+- [x] 다음 시작 지점(Phase/작업 1개)을 명시했다.
+- [x] 관련 커밋 SHA를 기록했다.
 
 ## 8. 진행 로그(append-only)
 - [ ] `YYYY-MM-DD HH:mm UTC | Phase-X | done: ... | next: ... | blockers: ... | commit: ...`
@@ -204,3 +204,4 @@
 - [x] `2026-02-22 13:05 UTC | Phase-0~5(partial) | done: SSR 서버/라우트, env/db/service 모듈, Tailwind+GitHub markdown 자산 파이프라인, 테마 토글, 카드 리스트/상세 렌더 구현 | next: 서버 부팅 스모크 + 자동 테스트 케이스 추가(Phase 0/1 Baseline) | blockers: 실DB 연결 확인용 .env 필요 | commit: (not committed)`
 - [x] `2026-02-22 13:42 UTC | Test-baseline(partial) | done: unit(env parser) + smoke(SSR list/detail render) 테스트 추가 및 통과 | next: DB/라우트 통합 테스트 확장 | blockers: sandbox listen 제한으로 서버 소켓 스모크 미실행 | commit: (not committed)`
 - [x] `2026-02-22 13:55 UTC | Phase-1~5(test-hardening) | done: 라우트 테스트를 소켓 비의존 방식으로 보강, env 카테고리 빈값 비활성화 규칙 수정, service/markdown/error 포맷 테스트 확장(총 23 tests PASS) | next: 실DB 기반 서버 부팅 스모크 및 릴리즈 수동체크 수행 | blockers: sandbox 네트워크 제한으로 Atlas ping(ECONNREFUSED) 확인 불가 | commit: (not committed)`
+- [x] `2026-02-22 14:00 UTC | Commit | done: Phase 0~5 baseline 구현/테스트/문서 동기화 반영 후 커밋 | next: 실DB 부팅 스모크 및 수동체크(Phase 6~8) | blockers: sandbox 네트워크 제한으로 Atlas ping 미검증 | commit: 60be5e5`
