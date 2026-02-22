@@ -76,6 +76,8 @@
 #### 구현 체크리스트
 - [ ] 라우트 구현: `GET /`, `GET /notes/:id`, `GET /:id` alias(`302`)
 - [ ] 리스트 페이지 SSR 구현(카드 클릭 내비게이션)
+- [ ] 카드 표시 정보를 `title/tag/date` 기준으로 고정
+- [ ] 카드 전체 영역 클릭 시 상세 이동되도록 구현
 - [ ] 상세 페이지 SSR 구현(`.markdown-body` 래퍼 사용)
 - [ ] 404/500 기본 에러 페이지 구현
 - [ ] 데이터 바인딩 계약 고정: 리스트(`id,title,dateLabel,favorite,tags`), 상세(`title,renderedHtml`)
@@ -93,14 +95,18 @@
 - [ ] Markdown 렌더 모듈 구현(`markdown -> safe html`)
 - [ ] GitHub 스타일 계열 CSS 적용(`.markdown-body` 기반)
 - [ ] 라이트/다크 모드 토글 구현 + 저장(`jmemo_theme`)
+- [ ] 라이트/다크 모두 차분한 톤 팔레트로 디자인 토큰 구성
+- [ ] 권장 폰트 스택(`Pretendard Variable` 계열) 및 본문/메타 타이포그래피 적용
 - [ ] SSR 초기 테마 결정(쿠키 -> `prefers-color-scheme`)
 - [ ] 반응형 레이아웃 적용(모바일/태블릿/PC)
-- [ ] PC 최대 너비 제한 적용(초기값 `860px`, 디자인 QA 항목으로 유지)
+- [ ] PC 최대 너비 제한 적용(`../jwreview` 기준 `768px`)
 
 #### Baseline Test
 - [ ] Markdown 요소 렌더 테스트(heading/list/code/table/blockquote)
 - [ ] 테마 토글 상태 유지 테스트(새로고침/재접속)
 - [ ] 반응형 스타일 테스트(주요 브레이크포인트)
+- [ ] 카드 전역 클릭 영역 테스트(카드 내부 어느 영역 클릭해도 이동)
+- [ ] 카드 정보 노출 테스트(`title/tag/date`)
 - [ ] sanitize 테스트(`script`, inline handler 제거)
 
 #### Exit Criteria
@@ -176,10 +182,11 @@
 - Phase 6, Phase 7은 이전 Phase 완료 후 진행(순차 권장)
 
 ## 6. 선행 결정 의존성
-- [ ] DC-08: 상세 본문 최대 너비 최종 픽셀값 확정 (`DESIGN.md`)
-- [ ] DC-09: Markdown CSS 공급 방식 확정 (`DESIGN.md`)
-- [ ] IC-09: 카드 리스트 페이지 페이지네이션 도입 여부 확정 (`DESIGN.md`)
-- [ ] IC-10: 상세 페이지 TOC 제공 여부 확정 (`DESIGN.md`)
+- [x] DC-08: 상세 본문 최대 너비 `768px` 확정 (`DESIGN.md`)
+- [x] DC-09: Markdown CSS 공급 방식 `github-markdown-css` 확정 (`DESIGN.md`)
+- [x] IC-09: 카드 리스트 페이지 페이지네이션 도입 확정 (`DESIGN.md`)
+- [x] IC-10: 상세 페이지 TOC 미도입 확정 (`DESIGN.md`)
+- [x] PD-07: 대상 사용자 프로파일/사용 빈도 확정 (PC/모바일 모두 자주 사용, 모바일 조회 비중 높음) (`DESIGN.md`)
 
 ## 7. 중단/재개 체크리스트
 - [ ] 마지막으로 완료한 체크박스를 이 문서에 반영했다.
@@ -191,3 +198,6 @@
 - [ ] `YYYY-MM-DD HH:mm UTC | Phase-X | done: ... | next: ... | blockers: ... | commit: ...`
 - [x] `2026-02-22 00:00 UTC | Planning | done: REQUIREMENTS/DESIGN 기반 IMPLEMENT 초안 작성 | next: Phase 0 실행 | blockers: 없음 | commit: (not committed)`
 - [x] `2026-02-22 00:10 UTC | Phase-8(partial) | done: MANUAL_TEST_CHECKLIST 초안 작성 및 요구사항/설계 항목 매핑 | next: 수동 점검 실제 수행 후 PASS/FAIL 기록 | blockers: 없음 | commit: (not committed)`
+- [x] `2026-02-22 00:20 UTC | Design-sync | done: PD-01~PD-06 확정사항을 DESIGN/IMPLEMENT에 동기화 | next: Phase 0 구현 시작 | blockers: PD-07 미확정 | commit: (not committed)`
+- [x] `2026-02-22 00:30 UTC | Design-sync | done: PD-07(사용자 프로파일/사용 빈도) 확정 및 REQUIREMENTS/DESIGN/IMPLEMENT 동기화 | next: Phase 0 구현 시작 | blockers: 없음 | commit: (not committed)`
+- [x] `2026-02-22 00:40 UTC | Design-sync | done: 카드 UI 세부기준(title/tag/date, 카드 전체 클릭, 차분한 톤, 권장 폰트) 문서 동기화 | next: Phase 0 구현 시작 | blockers: 없음 | commit: (not committed)`
