@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import express from "express";
+import { buildRequestLogPayload, writeStructuredLog } from "./logging.mjs";
 import { renderMarkdownToHtml } from "./markdown.mjs";
 import { renderDetailPage, renderErrorPage, renderListPage, renderNotFoundPage } from "./ssr/pages.mjs";
 import { isNoteId } from "./services/review-service.mjs";
@@ -44,16 +45,12 @@ function safeMessage(error, status) {
 }
 
 function logRequest(req, res, startAt) {
-  const payload = {
-    time: new Date().toISOString(),
-    level: "info",
-    requestId: req.requestId,
-    route: req.originalUrl,
-    status: res.statusCode,
-    latencyMs: Date.now() - startAt
-  };
-
-  console.log(JSON.stringify(payload));
+  const payload = buildRequestLogPayload({
+    req,
+    res,
+    startAt
+  });
+  writeStructuredLog(payload);
 }
 
 export function createApp(options = {}) {

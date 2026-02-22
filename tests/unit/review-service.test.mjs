@@ -109,6 +109,66 @@ describe("review service", () => {
     });
   });
 
+  it("returns empty dataset contract without error", async () => {
+    const model = createMockModel({
+      listItems: [],
+      total: 0
+    });
+    const service = createReviewService({
+      JmemoModel: model,
+      categoryFilterTags: ["review"]
+    });
+
+    const result = await service.listReviews({ page: 1, pageSize: 30 });
+
+    expect(result).toEqual({
+      items: [],
+      page: 1,
+      pageSize: 30,
+      total: 0,
+      hasNext: false
+    });
+  });
+
+  it("disables category filter when filter tags are empty", async () => {
+    const model = createMockModel({
+      listItems: [],
+      total: 0
+    });
+    const service = createReviewService({
+      JmemoModel: model,
+      categoryFilterTags: []
+    });
+
+    await service.listReviews({ page: 1, pageSize: 10 });
+    expect(model.calls.listFilter).toEqual({});
+    expect(model.calls.countFilter).toEqual({});
+  });
+
+  it("handles special character tags and pagination boundary", async () => {
+    const model = createMockModel({
+      listItems: [
+        {
+          _id: "65f111111111111111111111",
+          title: "Special",
+          regdate: new Date("2026-02-22T00:00:00.000Z"),
+          favorite: false,
+          category: ["review", "a+b", "tag.with.dot", "tag_slash/name"]
+        }
+      ],
+      total: 20
+    });
+    const service = createReviewService({
+      JmemoModel: model,
+      categoryFilterTags: ["review"]
+    });
+
+    const result = await service.listReviews({ page: 2, pageSize: 10 });
+
+    expect(result.hasNext).toBe(false);
+    expect(result.items[0].tags).toEqual(["review", "a+b", "tag.with.dot", "tag_slash/name"]);
+  });
+
   it("throws 404 for invalid detail id format", async () => {
     const model = createMockModel();
     const service = createReviewService({ JmemoModel: model });

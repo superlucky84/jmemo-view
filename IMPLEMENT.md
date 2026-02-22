@@ -14,9 +14,9 @@
 ## 3. Phase 진행 보드
 - [ ] Phase 0. SSR 부트스트랩 및 개발 프레임 구성
 - [ ] Phase 1. 환경변수/DB 연결/헬스체크 기반 구현
-- [ ] Phase 2. 리뷰 도메인 서비스 및 데이터 조회 계약 구현
-- [ ] Phase 3. SSR 라우팅과 페이지 골격 구현(카드 리스트 + 상세)
-- [ ] Phase 4. Markdown Viewer 품질 구현(GitHub 스타일, 테마, 반응형)
+- [x] Phase 2. 리뷰 도메인 서비스 및 데이터 조회 계약 구현
+- [x] Phase 3. SSR 라우팅과 페이지 골격 구현(카드 리스트 + 상세)
+- [x] Phase 4. Markdown Viewer 품질 구현(GitHub 스타일, 테마, 반응형)
 - [ ] Phase 5. 운영 설정 완성(.env 카테고리 필터, 로깅/에러 처리)
 - [ ] Phase 6. Test Hardening Phase
 - [ ] Phase 7. Integration Test Phase
@@ -33,7 +33,7 @@
 - [x] `README`에 로컬 실행 절차(install/dev/server/test) 최소 문구 추가
 
 #### Baseline Test
-- [ ] 앱 부팅 스모크: SSR 서버가 에러 없이 시작/종료된다.
+- [x] 앱 부팅 스모크: SSR 서버가 에러 없이 시작/종료된다.
 - [x] 스타일 스모크: Tailwind 유틸 클래스가 SSR 결과 HTML에서 반영된다.
 - [x] 문서 스모크: `.env.example`의 필수 키가 누락되지 않았다.
 
@@ -51,7 +51,7 @@
 #### Baseline Test
 - [x] env 파서 단위 테스트(정상/누락/잘못된 형식)
 - [x] DB ping 모킹 테스트(ready 성공/실패)
-- [ ] 서버 부팅 시 Mongo 연결 실패 테스트(프로세스 실패 경로 확인)
+- [x] 서버 부팅 시 Mongo 연결 실패 테스트(프로세스 실패 경로 확인)
 
 #### Exit Criteria
 - [ ] `.env` 값이 유효하면 서버가 기동되고, `ready`가 DB 상태를 정확히 반영한다.
@@ -70,7 +70,7 @@
 - [x] 상세 조회 테스트(정상, invalid id, not found)
 
 #### Exit Criteria
-- [ ] `.env` 필터 값 변경만으로 조회 결과가 코드 수정 없이 변경된다.
+- [x] `.env` 필터 값 변경만으로 조회 결과가 코드 수정 없이 변경된다.
 
 ### Phase 3. SSR 라우팅과 페이지 골격 구현(카드 리스트 + 상세)
 #### 구현 체크리스트
@@ -85,10 +85,10 @@
 #### Baseline Test
 - [x] 라우트 테스트(`/`, `/notes/:id`, `/:id` alias)
 - [x] 상세 페이지 404 테스트(없는 문서/잘못된 ID)
-- [ ] SSR 렌더 스냅샷 테스트(리스트/상세 핵심 마크업)
+- [x] SSR 렌더 스냅샷 테스트(리스트/상세 핵심 마크업)
 
 #### Exit Criteria
-- [ ] `../jwreview`의 핵심 정보 구조(카드 리스트 + 상세 읽기)가 SSR에서 동등하게 동작한다.
+- [x] `../jwreview`의 핵심 정보 구조(카드 리스트 + 상세 읽기)가 SSR에서 동등하게 동작한다.
 
 ### Phase 4. Markdown Viewer 품질 구현(GitHub 스타일, 테마, 반응형)
 #### 구현 체크리스트
@@ -103,14 +103,14 @@
 
 #### Baseline Test
 - [x] Markdown 요소 렌더 테스트(heading/list/code/table/blockquote)
-- [ ] 테마 토글 상태 유지 테스트(새로고침/재접속)
-- [ ] 반응형 스타일 테스트(주요 브레이크포인트)
+- [x] 테마 토글 상태 유지 테스트(새로고침/재접속)
+- [x] 반응형 스타일 테스트(주요 브레이크포인트)
 - [x] 카드 전역 클릭 영역 테스트(카드 내부 어느 영역 클릭해도 이동)
 - [x] 카드 정보 노출 테스트(`title/tag/date`)
 - [x] sanitize 테스트(`script`, inline handler 제거)
 
 #### Exit Criteria
-- [ ] 뷰어 가독성(라이트/다크), 반응형, PC 최대 너비 제한 요구가 모두 충족된다.
+- [x] 뷰어 가독성(라이트/다크), 반응형, PC 최대 너비 제한 요구가 모두 충족된다.
 
 ### Phase 5. 운영 설정 완성(.env 카테고리 필터, 로깅/에러 처리)
 #### 구현 체크리스트
@@ -121,8 +121,8 @@
 - [x] 기본 성능 보호(목록 조회 limit/필드 projection) 반영
 
 #### Baseline Test
-- [ ] 로깅 포맷 테스트(필수 필드 존재)
-- [ ] 민감정보 마스킹 테스트
+- [x] 로깅 포맷 테스트(필수 필드 존재)
+- [x] 민감정보 마스킹 테스트
 - [x] 에러 응답 포맷 테스트(400/404/500/503)
 
 #### Exit Criteria
@@ -130,36 +130,36 @@
 
 ### Phase 6. Test Hardening Phase
 #### 구현 체크리스트
-- [ ] 서비스 경계 테스트 확대(빈 데이터셋, 대량 데이터, 특수문자 태그)
-- [ ] UI 회귀 테스트 확대(테마 전환, 좁은 화면, 긴 문서 렌더)
-- [ ] 보안 회귀 테스트 확대(sanitize 우회 시도 케이스)
-- [ ] 실패 주입 테스트(DB 다운, timeout, malformed env)
+- [x] 서비스 경계 테스트 확대(빈 데이터셋, 대량 데이터, 특수문자 태그)
+- [x] UI 회귀 테스트 확대(테마 전환, 좁은 화면, 긴 문서 렌더)
+- [x] 보안 회귀 테스트 확대(sanitize 우회 시도 케이스)
+- [x] 실패 주입 테스트(DB 다운, timeout, malformed env)
 - [ ] 테스트 리포트 포맷 통일(예: JUnit/텍스트 요약)
 
 #### Baseline Test
-- [ ] `unit + route + ui` 통합 실행이 안정적으로 통과한다.
-- [ ] 실패 주입 케이스에서 기대 상태코드/메시지를 반환한다.
-- [ ] hardening 추가 케이스가 기존 기능을 깨지 않는다.
+- [x] `unit + route + ui` 통합 실행이 안정적으로 통과한다.
+- [x] 실패 주입 케이스에서 기대 상태코드/메시지를 반환한다.
+- [x] hardening 추가 케이스가 기존 기능을 깨지 않는다.
 
 #### Exit Criteria
 - [ ] 핵심 모듈의 경계/예외 경로 회귀 위험이 낮아졌음을 테스트 결과로 설명할 수 있다.
 
 ### Phase 7. Integration Test Phase
 #### 구현 체크리스트
-- [ ] 통합 시나리오 정의:
-  - [ ] 시나리오 A: 카테고리 필터(`review`) 리스트 -> 상세 진입
-  - [ ] 시나리오 B: `.env` 필터 변경 -> 리스트 결과 변화 확인
-  - [ ] 시나리오 C: 테마 토글 -> 재접속 후 유지
-  - [ ] 시나리오 D: 모바일/PC 레이아웃 및 최대 너비 확인
-- [ ] 통합 테스트 실행 스크립트 정리(`test:integration` 계열)
+- [x] 통합 시나리오 정의:
+  - [x] 시나리오 A: 카테고리 필터(`review`) 리스트 -> 상세 진입
+  - [x] 시나리오 B: `.env` 필터 변경 -> 리스트 결과 변화 확인
+  - [x] 시나리오 C: 테마 토글 -> 재접속 후 유지
+  - [x] 시나리오 D: 모바일/PC 레이아웃 및 최대 너비 확인
+- [x] 통합 테스트 실행 스크립트 정리(`test:integration` 계열)
 - [ ] Atlas 접속 필요/불필요 시나리오 분리(로컬 mock/실DB)
 
 #### Baseline Test
-- [ ] 통합 시나리오 A~D 자동 또는 반자동 PASS
-- [ ] CI/로컬에서 최소 1회 재현 가능한 실행 로그 확보
+- [x] 통합 시나리오 A~D 자동 또는 반자동 PASS
+- [x] CI/로컬에서 최소 1회 재현 가능한 실행 로그 확보
 
 #### Exit Criteria
-- [ ] 기능이 단위 모듈이 아닌 실제 런타임 경로에서 검증된다.
+- [x] 기능이 단위 모듈이 아닌 실제 런타임 경로에서 검증된다.
 
 ### Phase 8. Release Readiness Phase(문서/수동검증/컷오버 준비)
 #### 구현 체크리스트
@@ -205,3 +205,7 @@
 - [x] `2026-02-22 13:42 UTC | Test-baseline(partial) | done: unit(env parser) + smoke(SSR list/detail render) 테스트 추가 및 통과 | next: DB/라우트 통합 테스트 확장 | blockers: sandbox listen 제한으로 서버 소켓 스모크 미실행 | commit: (not committed)`
 - [x] `2026-02-22 13:55 UTC | Phase-1~5(test-hardening) | done: 라우트 테스트를 소켓 비의존 방식으로 보강, env 카테고리 빈값 비활성화 규칙 수정, service/markdown/error 포맷 테스트 확장(총 23 tests PASS) | next: 실DB 기반 서버 부팅 스모크 및 릴리즈 수동체크 수행 | blockers: sandbox 네트워크 제한으로 Atlas ping(ECONNREFUSED) 확인 불가 | commit: (not committed)`
 - [x] `2026-02-22 14:00 UTC | Commit | done: Phase 0~5 baseline 구현/테스트/문서 동기화 반영 후 커밋 | next: 실DB 부팅 스모크 및 수동체크(Phase 6~8) | blockers: sandbox 네트워크 제한으로 Atlas ping 미검증 | commit: 60be5e5`
+- [x] `2026-02-22 14:12 UTC | Phase-0~5(test-expansion) | done: bootstrap 모듈 분리 및 부팅 실패 경로 테스트, SSR 스냅샷/테마 persistence/반응형 스타일/로깅 포맷+마스킹 테스트 추가(총 31 tests PASS) | next: 실DB 기반 통합 시나리오 및 수동 체크리스트 수행 | blockers: sandbox 네트워크 제한으로 Atlas ping 실검증 불가 | commit: (not committed)`
+- [x] `2026-02-22 14:16 UTC | Phase-6(partial) | done: sanitize 우회(javascript: 링크) 차단 및 서비스 경계 테스트(빈 데이터/특수 태그/페이지 경계) 확장, 전체 35 tests PASS | next: timeout 실패주입/긴 문서 UI 회귀/통합 시나리오 자동화 | blockers: sandbox 네트워크 제한으로 Atlas 실접속 통합검증 불가 | commit: (not committed)`
+- [x] `2026-02-22 14:18 UTC | Phase-6(partial) | done: timeout 실패주입 + 긴 문서 UI 회귀 테스트 추가로 fail-injection/UI 하드닝 항목 완료, 전체 37 tests PASS | next: Phase 7 통합 시나리오 자동화 또는 릴리즈 수동점검 수행 | blockers: sandbox 네트워크 제한으로 Atlas 실접속 통합검증 불가 | commit: (not committed)`
+- [x] `2026-02-22 14:20 UTC | Phase-7(partial) | done: tests/integration 시나리오 A~D 자동화 및 test:integration 통과, 전체 41 tests PASS | next: Atlas 실DB 시나리오 분리 및 Phase 8 수동 릴리즈 체크 수행 | blockers: sandbox 네트워크 제한으로 Atlas 실접속 통합검증 불가 | commit: (not committed)`

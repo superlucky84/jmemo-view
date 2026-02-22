@@ -13,7 +13,10 @@ function sanitizeRenderedHtml(html) {
     .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "")
     .replace(/\son[a-z]+\s*=\s*"[^"]*"/gi, "")
     .replace(/\son[a-z]+\s*=\s*'[^']*'/gi, "")
-    .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, "");
+    .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, "")
+    .replace(/\s(href|src)\s*=\s*"javascript:[^"]*"/gi, ' $1="#"')
+    .replace(/\s(href|src)\s*=\s*'javascript:[^']*'/gi, " $1='#'")
+    .replace(/\s(href|src)\s*=\s*javascript:[^\s>]+/gi, ' $1="#"');
 }
 
 export function renderMarkdownToHtml(markdownText) {
