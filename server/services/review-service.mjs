@@ -85,19 +85,42 @@ export function createReviewService(options = {}) {
     throw new Error("JmemoModel is required for createReviewService");
   }
 
-  const baseFilter =
-    Array.isArray(categoryFilterTags) && categoryFilterTags.length > 0
-      ? { category: { $in: categoryFilterTags } }
-      : {};
+  const defaultCategoryTags = Array.isArray(categoryFilterTags)
+    ? categoryFilterTags
+      .map((tag) => String(tag ?? "").trim())
+      .filter(Boolean)
+    : [];
+
+  function buildCategoryFilter(tags) {
+    if (!Array.isArray(tags) || tags.length === 0) {
+      return {};
+    }
+
+    return { category: { $in: tags } };
+  }
+
+  function resolveCategoryFilter(options = {}) {
+    const overrideTags =
+      options?.categoryFilterTags === undefined
+        ? null
+        : Array.isArray(options.categoryFilterTags)
+          ? options.categoryFilterTags
+            .map((tag) => String(tag ?? "").trim())
+            .filter(Boolean)
+          : [];
+
+    return buildCategoryFilter(overrideTags === null ? defaultCategoryTags : overrideTags);
+  }
 
   return {
-    async listReviews(query = {}) {
+    async listReviews(query = {}, options = {}) {
       const { page, pageSize } = parsePagination(query);
       const skip = (page - 1) * pageSize;
       const sort = { favorite: -1, regdate: -1, _id: -1 };
+      const categoryFilter = resolveCategoryFilter(options);
 
       const [items, total] = await Promise.all([
-        JmemoModel.find(baseFilter, {
+        JmemoModel.find(categoryFilter, {
           title: 1,
           regdate: 1,
           favorite: 1,
@@ -107,7 +130,7 @@ export function createReviewService(options = {}) {
           .skip(skip)
           .limit(pageSize)
           .lean(),
-        JmemoModel.countDocuments(baseFilter)
+        JmemoModel.countDocuments(categoryFilter)
       ]);
 
       return {
@@ -119,7 +142,7 @@ export function createReviewService(options = {}) {
       };
     },
 
-    async getReviewById(id) {
+    async getReviewById(id, options = {}) {
       if (!isValidObjectId(id)) {
         const error = new Error("Invalid note id format");
         error.code = "INVALID_ID_FORMAT";
@@ -127,8 +150,10 @@ export function createReviewService(options = {}) {
         throw error;
       }
 
+      const categoryFilter = resolveCategoryFilter(options);
+
       const note = await JmemoModel.findOne(
-        { _id: id, ...baseFilter },
+        { _id: id, ...categoryFilter },
         {
           title: 1,
           note: 1,

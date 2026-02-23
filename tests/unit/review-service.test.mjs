@@ -169,6 +169,25 @@ describe("review service", () => {
     expect(result.items[0].tags).toEqual(["review", "a+b", "tag.with.dot", "tag_slash/name"]);
   });
 
+  it("supports per-request category override (hostname based)", async () => {
+    const model = createMockModel({
+      listItems: [],
+      total: 0
+    });
+    const service = createReviewService({
+      JmemoModel: model,
+      categoryFilterTags: ["review"]
+    });
+
+    await service.listReviews(
+      { page: 1, pageSize: 10 },
+      { categoryFilterTags: ["share"] }
+    );
+
+    expect(model.calls.listFilter).toEqual({ category: { $in: ["share"] } });
+    expect(model.calls.countFilter).toEqual({ category: { $in: ["share"] } });
+  });
+
   it("throws 404 for invalid detail id format", async () => {
     const model = createMockModel();
     const service = createReviewService({ JmemoModel: model });

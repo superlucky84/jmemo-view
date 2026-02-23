@@ -2,8 +2,15 @@ import { describe, expect, it } from "vitest";
 import { createApp } from "../../server/app.mjs";
 
 function createMockReviewService() {
+  const calls = {
+    list: [],
+    detail: []
+  };
+
   return {
-    async listReviews() {
+    calls,
+    async listReviews(query = {}, options = {}) {
+      calls.list.push({ query, options });
       return {
         items: [
           {
@@ -20,7 +27,8 @@ function createMockReviewService() {
         hasNext: false
       };
     },
-    async getReviewById(id) {
+    async getReviewById(id, options = {}) {
+      calls.detail.push({ id, options });
       if (!/^[a-f\d]{24}$/i.test(id)) {
         const error = new Error("Invalid note id format");
         error.code = "INVALID_ID_FORMAT";
@@ -293,5 +301,32 @@ describe("app routes", () => {
     expect(res500.text).toContain("500 Error");
     expect(res503.statusCode).toBe(503);
     expect(res503.text).toContain("503 Error");
+  });
+
+  it("uses hostname-based category filter override", async () => {
+    const reviewService = createMockReviewService();
+    const app = createApp({
+      reviewService,
+      config: { categoryFilterTags: ["review", "share"] },
+      readinessCheck: async () => ({ ok: true })
+    });
+
+    const listHandler = getRouteHandler(app, "/");
+    const detailHandler = getRouteHandler(app, "/notes/:id");
+
+    await invokeHandler(listHandler, { url: "/", hostname: "review.example.com" });
+    await invokeHandler(listHandler, { url: "/", hostname: "share.example.com" });
+    await invokeHandler(listHandler, { url: "/", hostname: "memo.example.com" });
+
+    await invokeHandler(detailHandler, {
+      url: "/notes/65f111111111111111111111",
+      hostname: "share.example.com",
+      params: { id: "65f111111111111111111111" }
+    });
+
+    expect(reviewService.calls.list[0].options.categoryFilterTags).toEqual(["review"]);
+    expect(reviewService.calls.list[1].options.categoryFilterTags).toEqual(["share"]);
+    expect(reviewService.calls.list[2].options.categoryFilterTags).toEqual(["review", "share"]);
+    expect(reviewService.calls.detail[0].options.categoryFilterTags).toEqual(["share"]);
   });
 });

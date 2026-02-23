@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import express from "express";
+import { resolveCategoryFilterTagsByHostname } from "./host-filter.mjs";
 import { buildRequestLogPayload, writeStructuredLog } from "./logging.mjs";
 import { renderMarkdownToHtml } from "./markdown.mjs";
 import { renderDetailPage, renderErrorPage, renderListPage, renderNotFoundPage } from "./ssr/pages.mjs";
@@ -112,15 +113,19 @@ export function createApp(options = {}) {
     "/",
     asyncRoute(async (req, res) => {
       const theme = resolveRequestTheme(req);
+      const fallbackTags = Array.isArray(config?.categoryFilterTags) ? config.categoryFilterTags : [];
+      const categoryFilterTags = resolveCategoryFilterTagsByHostname(req.hostname, fallbackTags);
       const listResult = await reviewService.listReviews({
         page: req.query.page,
         pageSize: req.query.pageSize
+      }, {
+        categoryFilterTags
       });
 
       const html = renderListPage({
         listResult,
         theme,
-        filterTags: config.categoryFilterTags
+        filterTags: categoryFilterTags
       });
 
       res.status(200).type("text/html").send(html);
@@ -131,7 +136,11 @@ export function createApp(options = {}) {
     "/notes/:id",
     asyncRoute(async (req, res) => {
       const theme = resolveRequestTheme(req);
-      const review = await reviewService.getReviewById(req.params.id);
+      const fallbackTags = Array.isArray(config?.categoryFilterTags) ? config.categoryFilterTags : [];
+      const categoryFilterTags = resolveCategoryFilterTagsByHostname(req.hostname, fallbackTags);
+      const review = await reviewService.getReviewById(req.params.id, {
+        categoryFilterTags
+      });
       const noteHtml = renderMarkdownToHtml(review.note);
       const html = renderDetailPage({ review, noteHtml, theme });
       res.status(200).type("text/html").send(html);
