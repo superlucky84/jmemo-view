@@ -2,6 +2,20 @@
 
 SSR refactoring workspace for `../jwreview`.
 
+## Production Quick Start
+1. Install dependencies:
+   - `pnpm install --frozen-lockfile`
+2. Prepare `.env` (at least `MONGODB_URI`, `PORT`).
+3. Validate env:
+   - `pnpm run env:check`
+4. Build assets:
+   - `pnpm run build`
+5. Start server:
+   - `pnpm run server:start`
+6. Health check:
+   - `curl http://127.0.0.1:$PORT/health/live`
+   - `curl http://127.0.0.1:$PORT/health/ready`
+
 ## Prerequisites
 - Node.js 20+
 - pnpm 9+
