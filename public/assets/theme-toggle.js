@@ -24,7 +24,14 @@ function setTheme(theme, persist = true) {
   const toggle = document.getElementById("theme-toggle");
   if (toggle) {
     toggle.dataset.theme = nextTheme;
-    toggle.textContent = nextTheme === "dark" ? "Dark" : "Light";
+    const iconEl = toggle.querySelector(".theme-icon");
+    if (iconEl) {
+      iconEl.textContent = nextTheme === "dark" ? "☀️" : "🌙";
+    }
+    const textNode = toggle.lastChild;
+    if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+      textNode.textContent = nextTheme === "dark" ? "Light" : "Dark";
+    }
     toggle.setAttribute("aria-label", nextTheme === "dark" ? "다크 모드 사용 중" : "라이트 모드 사용 중");
   }
 }

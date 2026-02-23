@@ -10,7 +10,7 @@ const THEME_SCRIPT = readFileSync(
 
 function createDom() {
   const dom = new JSDOM(
-    `<!doctype html><html><body><button id="theme-toggle"></button></body></html>`,
+    `<!doctype html><html><body><button id="theme-toggle"><span class="theme-icon">🌙</span>Dark</button></body></html>`,
     {
       url: "https://jmemo.local/",
       runScripts: "outside-only"
@@ -47,7 +47,7 @@ describe("theme toggle client script", () => {
 
     expect(root.classList.contains("dark")).toBe(true);
     expect(root.dataset.theme).toBe("dark");
-    expect(toggle.textContent).toBe("Dark");
+    expect(toggle.textContent).toContain("Light");
   });
 
   it("persists toggled theme to localStorage and cookie", () => {

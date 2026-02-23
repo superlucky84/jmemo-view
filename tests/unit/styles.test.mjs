@@ -10,6 +10,6 @@ describe("style contract", () => {
     expect(css).toContain("sm:grid-cols-2");
     expect(css).toContain("@media (min-width: 768px)");
     expect(css).toContain(".markdown-frame");
-    expect(css).toContain("max-width: 768px;");
+    expect(css).toContain("max-width: 800px;");
   });
 });

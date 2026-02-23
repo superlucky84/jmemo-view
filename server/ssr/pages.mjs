@@ -33,7 +33,8 @@ function makePageQuery(page, pageSize) {
 }
 
 function ThemeToggle(theme) {
-  const current = theme === "dark" ? "Dark" : "Light";
+  const icon = theme === "dark" ? "☀️" : "🌙";
+  const label = theme === "dark" ? "Light" : "Dark";
   return button(
     {
       id: "theme-toggle",
@@ -41,7 +42,8 @@ function ThemeToggle(theme) {
       type: "button",
       "aria-label": "테마 전환"
     },
-    current
+    span({ class: "theme-icon" }, icon),
+    label
   );
 }
 
@@ -68,20 +70,17 @@ function AppDocument({ pageTitle, theme, content }) {
   );
 }
 
-function renderLayout({ titleText, subtitleText, theme, bodyContent }) {
-  return fFragment(
-    header(
-      {
-        class: "topbar"
-      },
-      div(
-        {},
-        h1({ class: "brand-title" }, titleText),
-        subtitleText ? p({ class: "brand-sub" }, subtitleText) : null
-      ),
-      ThemeToggle(theme)
+function Topbar({ titleText, subtitleText, theme }) {
+  return header(
+    {
+      class: "topbar"
+    },
+    div(
+      {},
+      h1({ class: "brand-title" }, titleText),
+      subtitleText ? p({ class: "brand-sub" }, subtitleText) : null
     ),
-    bodyContent
+    ThemeToggle(theme)
   );
 }
 
@@ -146,14 +145,13 @@ function ListContent({ listResult, filterTags, theme }) {
       : span({ class: "pager-disabled" }, "Next")
   );
 
-  return renderLayout({
-    titleText: "JW Review",
-    subtitleText: subtitle,
-    theme,
-    bodyContent: main(
-      {
-        class: "page-shell"
-      },
+  return main(
+    {
+      class: "page-shell"
+    },
+    div(
+      { class: "list-container" },
+      Topbar({ titleText: "JW Review", subtitleText: subtitle, theme }),
       items.length > 0
         ? section(
             {
@@ -169,55 +167,47 @@ function ListContent({ listResult, filterTags, theme }) {
           ),
       pager
     )
-  });
+  );
 }
 
 function DetailContent({ review, noteHtml, theme }) {
-  return renderLayout({
-    titleText: "JW Review",
-    subtitleText: review.dateLabel,
-    theme,
-    bodyContent: main(
+  return main(
+    {
+      class: "page-shell"
+    },
+    section(
       {
-        class: "page-shell"
+        class: "detail-container"
       },
-      section(
+      Topbar({
+        titleText: review.title,
+        subtitleText: review.tags.length > 0
+          ? `${review.tags.join(", ")}  ·  ${review.dateLabel}`
+          : `untagged  ·  ${review.dateLabel}`,
+        theme
+      }),
+      a({ href: "/", class: "back-link" }, "← 리스트로"),
+      article(
         {
-          class: "detail-shell"
+          class: "markdown-frame"
         },
-        a({ href: "/", class: "back-link" }, "← 리스트로"),
-        article(
-          {
-            class: "markdown-frame"
-          },
-          h1({ class: "brand-title" }, review.title),
-          p(
-            {
-              class: "detail-meta"
-            },
-            review.tags.length > 0
-              ? `tag: ${review.tags.join(", ")}`
-              : "tag: untagged"
-          ),
-          div({
-            class: "markdown-body",
-            innerHTML: noteHtml
-          })
-        )
+        div({
+          class: "markdown-body",
+          innerHTML: noteHtml
+        })
       )
     )
-  });
+  );
 }
 
 function ErrorContent({ status, titleText, message, theme }) {
-  return renderLayout({
-    titleText: "JW Review",
-    subtitleText: `status: ${status}`,
-    theme,
-    bodyContent: main(
-      {
-        class: "page-shell"
-      },
+  return main(
+    {
+      class: "page-shell"
+    },
+    div(
+      { class: "error-container" },
+      Topbar({ titleText: "JW Review", subtitleText: `status: ${status}`, theme }),
       section(
         {
           class: "error-wrap"
@@ -232,7 +222,7 @@ function ErrorContent({ status, titleText, message, theme }) {
         )
       )
     )
-  });
+  );
 }
 
 function toHtml(documentWDom) {

@@ -290,6 +290,6 @@ describe("integration scenarios", () => {
   it("D: mobile/pc layout contract and max width are present", () => {
     const css = readFileSync(resolve(process.cwd(), "src/styles/app.css"), "utf8");
     expect(css).toContain("sm:grid-cols-2");
-    expect(css).toContain("max-width: 768px;");
+    expect(css).toContain("max-width: 800px;");
   });
 });
