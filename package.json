@@ -31,7 +31,7 @@
   "dependencies": {
     "express": "^5.2.1",
     "github-markdown-css": "^5.9.0",
-    "lithent": "file:../lithent",
+    "lithent": "^1.21.7",
     "markdown-it": "^14.1.1",
     "mongoose": "^9.2.1",
     "multer": "^2.0.2"

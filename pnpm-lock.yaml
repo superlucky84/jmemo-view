@@ -15,8 +15,8 @@ importers:
         specifier: ^5.9.0
         version: 5.9.0
       lithent:
-        specifier: file:../lithent
-        version: file:../lithent
+        specifier: ^1.21.7
+        version: 1.21.7
       markdown-it:
         specifier: ^14.1.1
         version: 14.1.1
@@ -1090,8 +1090,8 @@ packages:
   linkify-it@5.0.0:
     resolution: {integrity: sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==}
 
-  lithent@file:../lithent:
-    resolution: {directory: ../lithent, type: directory}
+  lithent@1.21.7:
+    resolution: {integrity: sha512-o93x4xdGxVmCecBWgR1TB2GHiNx8kzDtdcjRxESOjyKAUOulZFHLPehMJwVVsqvya3g+ijDRxQSnOxcTpTsVww==}
 
   loupe@3.2.1:
     resolution: {integrity: sha512-CdzqowRJCeLU72bHvWqwRBBlLcMEtIvGrlvef74kMnV2AolS9Y8xUv1I0U/MNAWMhBlKIoyuEgoJ0t/bbwHbLQ==}
@@ -2517,7 +2517,7 @@ snapshots:
     dependencies:
       uc.micro: 2.1.0
 
-  lithent@file:../lithent: {}
+  lithent@1.21.7: {}
 
   loupe@3.2.1: {}
 
